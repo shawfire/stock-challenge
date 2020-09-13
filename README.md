@@ -81,7 +81,6 @@ $ git clone https://github.com/shawfire/stock-challenge.git
 $ cd stock-challenge
 
 $ mvn test
-mvn test
 [INFO] Scanning for projects...
 [INFO]
 [INFO] ----------------< net.shawfire.stocks:stock-challenge >-----------------
@@ -93,14 +92,16 @@ mvn test
 [INFO] Copying 2 resources
 [INFO]
 [INFO] --- maven-compiler-plugin:3.8.1:compile (default-compile) @ stock-challenge ---
-[INFO] Nothing to compile - all classes are up to date
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /Users/johnshaw/dev/stock-challenge/target/classes
 [INFO]
 [INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ stock-challenge ---
 [INFO] Using 'UTF-8' encoding to copy filtered resources.
 [INFO] Copying 2 resources
 [INFO]
 [INFO] --- maven-compiler-plugin:3.8.1:testCompile (default-testCompile) @ stock-challenge ---
-[INFO] Nothing to compile - all classes are up to date
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /Users/johnshaw/dev/stock-challenge/target/test-classes
 [INFO]
 [INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ stock-challenge ---
 [INFO] Surefire report directory: /Users/johnshaw/dev/stock-challenge/target/surefire-reports
@@ -109,8 +110,8 @@ mvn test
  T E S T S
 -------------------------------------------------------
 Running net.shawfire.stocks.StockUtilsTest
-getMaxProfit time for 0.1M data set: PT4.14772S
-Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.227 sec
+getMaxProfit time for 0.1M data set: PT0.058482S
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.15 sec
 
 Results :
 
@@ -119,8 +120,8 @@ Tests run: 9, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  5.275 s
-[INFO] Finished at: 2020-09-13T21:42:16+10:00
+[INFO] Total time:  2.679 s
+[INFO] Finished at: 2020-09-13T22:16:59+10:00
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -144,6 +145,13 @@ Find the maximum profit given a list of consecutive stock prices.
 - The profit can only be calculated when the buy and sell are separated by more than one minute.
 - The profit can't be calculated from consecutive stock prices.
 - There must be a minimum of 3 values in the array in order to calculate a profit.
+
+</details>
+
+<details><summary>Making the Solution efficient</summary>
+
+- By finding the next buy stockPrice that is less than the last stockPrice used to calculate the last maxProfit. The efficiency gained was a timing of 0.059S seconds
+  as apposed to 4.454S seconds for the initial version for a data set of 100,000 prices.
 
 </details>
 

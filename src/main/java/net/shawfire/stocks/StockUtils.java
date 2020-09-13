@@ -16,15 +16,23 @@ public class StockUtils {
   public static int getMaxProfit(int[] stockPrices) {
     if (stockPrices.length < 3) {
       throw new IllegalArgumentException(
-          "There must be at least three elements in the array in order to calculate a profit.");
+              "There must be at least three elements in the array in order to calculate a profit.");
     }
-    int maxProfit = stockPrices[2] - stockPrices[0];
+    int maxProfit = Integer.MIN_VALUE;
     int profit;
-    for (int i = 0; i < stockPrices.length - 2; i++) {
+    for (int i = 0; i < stockPrices.length - 2;) {
+      // Compare stockPrices[i] with all other subsequent stockPrices to find
+      // the maxProfit
       for (int j = i + 2; j < stockPrices.length; j++) {
         profit = stockPrices[j] - stockPrices[i];
         maxProfit = Math.max(profit, maxProfit);
       }
+      // Efficiency: find the next buy stockPrice that is less than the current
+      // stockPrices[i] value
+      int prevStart = stockPrices[i];
+      for (i += 1; i < stockPrices.length - 2 && prevStart < stockPrices[i];
+           i++)
+        ;
     }
     return maxProfit;
   }

@@ -78,7 +78,8 @@ public class StockUtilsTest {
     Instant end = Instant.now();
     Duration duration = Duration.between(start, end);
     System.out.println("getMaxProfit time for 0.1M data set: " + duration);
-    // getMaxProfit time for 0.1M data set: PT4.454S
+    // getMaxProfit time for 0.1M data set: PT0.059S
+    // Initial version timing: getMaxProfit time for 0.1M data set: PT4.454S
   }
 
 }
