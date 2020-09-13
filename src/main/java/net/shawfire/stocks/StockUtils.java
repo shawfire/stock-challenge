@@ -23,9 +23,16 @@ public class StockUtils {
     for (int i = 0; i < stockPrices.length - 2;) {
       // Compare stockPrices[i] with all other subsequent stockPrices to find
       // the maxProfit
-      for (int j = i + 2; j < stockPrices.length; j++) {
+      for (int j = i + 2; j < stockPrices.length; ) {
         profit = stockPrices[j] - stockPrices[i];
         maxProfit = Math.max(profit, maxProfit);
+
+        // Efficiency: find the next sell stockPrice that is greater than the current
+        // stockPrices[i] value
+        int prevSell = stockPrices[j];
+        for (j += 1; j < stockPrices.length && prevSell > stockPrices[j];
+             j++)
+          ;
       }
       // Efficiency: find the next buy stockPrice that is less than the current
       // stockPrices[i] value

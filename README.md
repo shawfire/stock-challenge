@@ -92,16 +92,14 @@ $ mvn test
 [INFO] Copying 2 resources
 [INFO]
 [INFO] --- maven-compiler-plugin:3.8.1:compile (default-compile) @ stock-challenge ---
-[INFO] Changes detected - recompiling the module!
-[INFO] Compiling 1 source file to /Users/johnshaw/dev/stock-challenge/target/classes
+[INFO] Nothing to compile - all classes are up to date
 [INFO]
 [INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ stock-challenge ---
 [INFO] Using 'UTF-8' encoding to copy filtered resources.
 [INFO] Copying 2 resources
 [INFO]
 [INFO] --- maven-compiler-plugin:3.8.1:testCompile (default-testCompile) @ stock-challenge ---
-[INFO] Changes detected - recompiling the module!
-[INFO] Compiling 1 source file to /Users/johnshaw/dev/stock-challenge/target/test-classes
+[INFO] Nothing to compile - all classes are up to date
 [INFO]
 [INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ stock-challenge ---
 [INFO] Surefire report directory: /Users/johnshaw/dev/stock-challenge/target/surefire-reports
@@ -110,8 +108,8 @@ $ mvn test
  T E S T S
 -------------------------------------------------------
 Running net.shawfire.stocks.StockUtilsTest
-getMaxProfit time for 0.1M data set: PT0.058482S
-Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.15 sec
+getMaxProfit time for 0.1M data set: PT0.025447S
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.108 sec
 
 Results :
 
@@ -120,8 +118,8 @@ Tests run: 9, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  2.679 s
-[INFO] Finished at: 2020-09-13T22:16:59+10:00
+[INFO] Total time:  1.093 s
+[INFO] Finished at: 2020-09-13T22:24:56+10:00
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -152,6 +150,7 @@ Find the maximum profit given a list of consecutive stock prices.
 
 - By finding the next buy stockPrice that is less than the last stockPrice used to calculate the last maxProfit. The efficiency gained was a timing of 0.059S seconds
   as apposed to 4.454S seconds for the initial version for a data set of 100,000 prices.
+- By finding the next sell price that is higher than the last stockPrice used to calculate the last maxProfit. The efficiency gained was a timing of 0.0254 seconds as apposed to the above timing on a set of 100,000 prices.
 
 </details>
 
