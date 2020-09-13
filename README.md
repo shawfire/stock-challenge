@@ -146,6 +146,8 @@ Find the maximum profit given a list of consecutive stock prices.
 
 </details>
 
+## Efficiencies made
+
 <details><summary>Making the Solution efficient</summary>
 
 - By finding the next buy stockPrice that is less than the last stockPrice used to calculate the last maxProfit. The efficiency gained was a timing of 0.059 seconds
