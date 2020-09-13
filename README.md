@@ -108,8 +108,8 @@ $ mvn test
  T E S T S
 -------------------------------------------------------
 Running net.shawfire.stocks.StockUtilsTest
-getMaxProfit time for 0.1M data set: PT0.025447S
-Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.108 sec
+getMaxProfit time for 0.1M data set: PT0.002039S
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.083 sec
 
 Results :
 
@@ -118,8 +118,8 @@ Tests run: 9, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  1.093 s
-[INFO] Finished at: 2020-09-13T22:24:56+10:00
+[INFO] Total time:  1.275 s
+[INFO] Finished at: 2020-09-14T07:13:07+10:00
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -148,9 +148,10 @@ Find the maximum profit given a list of consecutive stock prices.
 
 <details><summary>Making the Solution efficient</summary>
 
-- By finding the next buy stockPrice that is less than the last stockPrice used to calculate the last maxProfit. The efficiency gained was a timing of 0.059S seconds
-  as apposed to 4.454S seconds for the initial version for a data set of 100,000 prices.
+- By finding the next buy stockPrice that is less than the last stockPrice used to calculate the last maxProfit. The efficiency gained was a timing of 0.059 seconds
+  as apposed to 4.454 seconds for the initial version for a data set of 100,000 prices.
 - By finding the next sell price that is higher than the last stockPrice used to calculate the last maxProfit. The efficiency gained was a timing of 0.0254 seconds as apposed to the above timing on a set of 100,000 prices.
+- By reusing the maxSalePrice while it is still current when the maxBuyPrice has changed. The efficiency gained was a timing of 0.0025 seconds as apposed to the above timing on a set of 100,000 prices.
 
 </details>
 
