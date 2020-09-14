@@ -157,6 +157,22 @@ Find the maximum profit given a list of consecutive stock prices.
 
 </details>
 
+## Logging
+
+<details><summary>Logging</summary>
+
+- Added logging for monitoring.
+- Change logging for tests in `src/test/resources/log4j.properties`
+- The logging slows down the benchmark by a factor of ten; but is great for monitoring and performance tuning based on logs.
+- The benchmark test switches logging to `ERROR`, then restores the logger level.
+
+```bash
+# Set root logger level to INFO, DEBUG or ERROR and its only appender to A1.
+log4j.rootLogger=INFO, A1
+```
+
+</details>
+
 <details><summary>References</summary>
 
 - [junit4 docs](https://junit.org/junit4/)

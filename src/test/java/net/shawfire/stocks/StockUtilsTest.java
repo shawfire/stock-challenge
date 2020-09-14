@@ -1,5 +1,6 @@
 package net.shawfire.stocks;
 
+import org.apache.log4j.Level;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -66,6 +67,13 @@ public class StockUtilsTest {
 
   @Test
   public void benchmark() {
+
+    org.apache.log4j.Logger logger4j = org.apache.log4j.Logger.getRootLogger();
+    // Save the current log level
+    Level logLevel = logger4j.getLevel();
+    // For benchmarking use the lowest level of logging
+    logger4j.setLevel(org.apache.log4j.Level.toLevel("ERROR"));
+
     // Create 0.1M data points
     int[] stockPrices = new int[100000];
     for (int i = 0; i < 100000; i++) {
@@ -82,6 +90,9 @@ public class StockUtilsTest {
     // After second optimization: getMaxProfit time for 0.1M data set: PT0.028S
     // After the first optimization: getMaxProfit time for 0.1M data set: PT0.059S
     // Initial version timing: getMaxProfit time for 0.1M data set: PT4.454S
+
+    // Restore the log level
+    logger4j.setLevel(logLevel);
   }
 
 }
