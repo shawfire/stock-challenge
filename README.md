@@ -181,7 +181,7 @@ Find the maximum profit given a list of consecutive stock prices.
 
 - Added logging for monitoring.
 - Change logging for tests in `src/test/resources/log4j.properties`
-- The logging slows down the benchmark to `0.0156`. Which is still lower than all the timing; except for the last efficiency that was made (which was `0.0025`). Apart from monitoring logging is great aid for performance tuning based analysis of the logs.
+- The logging slows down the benchmark to `0.0156` seconds. Which is still lower than all the timing; except for the last efficiency that was made (which was `0.0025` seconds). Apart from monitoring logging is great aid for performance tuning based analysis of the logs.
 - The benchmark test switches logging to `ERROR`, then restores the logger level.
 
 ```bash
