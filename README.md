@@ -92,14 +92,16 @@ $ mvn test
 [INFO] Copying 2 resources
 [INFO]
 [INFO] --- maven-compiler-plugin:3.8.1:compile (default-compile) @ stock-challenge ---
-[INFO] Nothing to compile - all classes are up to date
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /Users/johnshaw/dev/stock-challenge/target/classes
 [INFO]
 [INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ stock-challenge ---
 [INFO] Using 'UTF-8' encoding to copy filtered resources.
 [INFO] Copying 2 resources
 [INFO]
 [INFO] --- maven-compiler-plugin:3.8.1:testCompile (default-testCompile) @ stock-challenge ---
-[INFO] Nothing to compile - all classes are up to date
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /Users/johnshaw/dev/stock-challenge/target/test-classes
 [INFO]
 [INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ stock-challenge ---
 [INFO] Surefire report directory: /Users/johnshaw/dev/stock-challenge/target/surefire-reports
@@ -108,8 +110,24 @@ $ mvn test
  T E S T S
 -------------------------------------------------------
 Running net.shawfire.stocks.StockUtilsTest
-getMaxProfit time for 0.1M data set: PT0.002039S
-Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.083 sec
+0    [main] INFO  net.shawfire.stocks.StockUtils  - getMaxProfit([10, 7, 5, 8, 11, 9])
+1    [main] INFO  net.shawfire.stocks.StockUtils  - getMaxProfit maxProfit: 6
+getMaxProfit time for 0.1M data set: PT0.015667S
+28   [main] INFO  net.shawfire.stocks.StockUtils  - getMaxProfit([2, 2, 3, 2, 3, 15, 41, 23, 44, 44, 42, 1, 44])
+28   [main] INFO  net.shawfire.stocks.StockUtils  - getMaxProfit maxProfit: 42
+29   [main] INFO  net.shawfire.stocks.StockUtils  - getMaxProfit([2, 1, 3, 2, 3])
+30   [main] INFO  net.shawfire.stocks.StockUtils  - getMaxProfit maxProfit: 2
+32   [main] INFO  net.shawfire.stocks.StockUtils  - getMaxProfit([10, 7, 5])
+32   [main] INFO  net.shawfire.stocks.StockUtils  - getMaxProfit maxProfit: -5
+34   [main] INFO  net.shawfire.stocks.StockUtils  - getMaxProfit([1, 2, 3, 3])
+35   [main] INFO  net.shawfire.stocks.StockUtils  - getMaxProfit maxProfit: 2
+37   [main] INFO  net.shawfire.stocks.StockUtils  - getMaxProfit([1, 2, 3, 4])
+37   [main] INFO  net.shawfire.stocks.StockUtils  - getMaxProfit maxProfit: 3
+38   [main] INFO  net.shawfire.stocks.StockUtils  - getMaxProfit([10, 7, 5, 8])
+38   [main] INFO  net.shawfire.stocks.StockUtils  - getMaxProfit maxProfit: 1
+39   [main] INFO  net.shawfire.stocks.StockUtils  - getMaxProfit([0, 7])
+39   [main] ERROR net.shawfire.stocks.StockUtils  - There must be at least three elements in the array in order to calculate a profit.
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.226 sec
 
 Results :
 
@@ -118,8 +136,8 @@ Tests run: 9, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  1.275 s
-[INFO] Finished at: 2020-09-14T07:13:07+10:00
+[INFO] Total time:  2.799 s
+[INFO] Finished at: 2020-09-15T08:16:20+10:00
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -163,7 +181,7 @@ Find the maximum profit given a list of consecutive stock prices.
 
 - Added logging for monitoring.
 - Change logging for tests in `src/test/resources/log4j.properties`
-- The logging slows down the benchmark by a factor of ten; but is great for monitoring and performance tuning based on logs.
+- The logging slows down the benchmark to `0.0156`. Which is still lower than all the timing; except for the last efficiency that was made (which was `0.0025`). Apart from monitoring logging is great aid for performance tuning based analysis of the logs.
 - The benchmark test switches logging to `ERROR`, then restores the logger level.
 
 ```bash
