@@ -28,41 +28,39 @@ public class StockUtils {
           "There must be at least three elements in the array in order to calculate a profit.");
     }
     int maxProfit = Integer.MIN_VALUE;
-    int profit, prevJ = -1;
-    for (int i = 0; i < stockPrices.length - 2;) {
+    int profit, prevSellIndex = 0;
+    for (int buyIndex = 0; buyIndex < stockPrices.length - 2;) {
 
       //  Efficiency: Only find an new max sell price if the current maxProfit
       //  is no longer valid.
-      //    Where prevJ is the index of the sell price used in the last
-      //    maxProfit calculation.
-      if (prevJ != -1 && prevJ > i + 1) {
-        profit = stockPrices[prevJ] - stockPrices[i];
+      if (prevSellIndex > buyIndex + 1) {
+        profit = stockPrices[prevSellIndex] - stockPrices[buyIndex];
         maxProfit = Math.max(profit, maxProfit);
-        logger.debug("getMaxProfit buy[{}]: {}, maxSell[{}] : {}, profit: {}", i,
-                stockPrices[i], prevJ, stockPrices[prevJ], profit);
+        logger.debug("getMaxProfit buy[{}]: {}, maxSell[{}] : {}, profit: {}", buyIndex,
+                stockPrices[buyIndex], prevSellIndex, stockPrices[prevSellIndex], profit);
       } else {
-        // Compare stockPrices[i] with all other subsequent stockPrices to find
+        // Compare stockPrices[buyIndex] with all other subsequent stockPrices to find
         // the maxProfit
-        for (int j = i + 2; j < stockPrices.length;) {
-          profit = stockPrices[j] - stockPrices[i];
+        for (int sellIndex = buyIndex + 2; sellIndex < stockPrices.length;) {
+          profit = stockPrices[sellIndex] - stockPrices[buyIndex];
           maxProfit = Math.max(profit, maxProfit);
-          logger.debug("getMaxProfit buy[{}]: {}, sell[{}] : {}, profit: {}", i,
-                       stockPrices[i], j, stockPrices[j], profit);
-          prevJ = j;
+          logger.debug("getMaxProfit buy[{}]: {}, sell[{}] : {}, profit: {}", buyIndex,
+                       stockPrices[buyIndex], sellIndex, stockPrices[sellIndex], profit);
+          prevSellIndex = sellIndex;
 
           // Efficiency: find the next sell stockPrice that is greater than the
-          // current stockPrices[i] value
-          int prevSell = stockPrices[j];
-          for (j += 1; j < stockPrices.length && prevSell > stockPrices[j]; j++)
+          // current stockPrices[buyIndex] value
+          int prevSell = stockPrices[sellIndex];
+          for (sellIndex += 1; sellIndex < stockPrices.length && prevSell > stockPrices[sellIndex]; sellIndex++)
             ;
         }
       }
 
       // Efficiency: find the next buy stockPrice that is less than the current
-      // stockPrices[i] value
-      int prevStart = stockPrices[i];
-      for (i += 1; i < stockPrices.length - 2 && prevStart < stockPrices[i];
-           i++)
+      // stockPrices[buyIndex] value
+      int prevStart = stockPrices[buyIndex];
+      for (buyIndex += 1; buyIndex < stockPrices.length - 2 && prevStart < stockPrices[buyIndex];
+           buyIndex++)
         ;
     }
     logger.info("getMaxProfit maxProfit: {}", maxProfit);
