@@ -31,8 +31,8 @@ public class StockUtils {
     int profit, prevSellIndex = 0;
     for (int buyIndex = 0; buyIndex < stockPrices.length - 2;) {
 
-      //  Efficiency: Only find an new max sell price if the current maxProfit
-      //  is no longer valid.
+      //  Efficiency: Only find an new max sell price if
+      //    the current max sell price (indexed by prevSellIndex) is no longer valid.
       if (prevSellIndex > buyIndex + 1) {
         profit = stockPrices[prevSellIndex] - stockPrices[buyIndex];
         maxProfit = Math.max(profit, maxProfit);
