@@ -50,18 +50,19 @@ public class StockUtils {
 
           // Efficiency: find the next sell stockPrice that is greater than the
           // current stockPrices[buyIndex] value
-          int prevSell = stockPrices[sellIndex];
-          for (sellIndex += 1; sellIndex < stockPrices.length && prevSell > stockPrices[sellIndex]; sellIndex++)
-            ;
+          int prevSell = stockPrices[prevSellIndex];
+          do {
+            sellIndex += 1;
+          } while (sellIndex < stockPrices.length && prevSell > stockPrices[sellIndex]);
         }
       }
 
       // Efficiency: find the next buy stockPrice that is less than the current
       // stockPrices[buyIndex] value
       int prevStart = stockPrices[buyIndex];
-      for (buyIndex += 1; buyIndex < stockPrices.length - 2 && prevStart < stockPrices[buyIndex];
-           buyIndex++)
-        ;
+      do {
+        buyIndex += 1;
+      } while (buyIndex < stockPrices.length - 2 && prevStart < stockPrices[buyIndex]);
     }
     logger.info("getMaxProfit maxProfit: {}", maxProfit);
     return maxProfit;
