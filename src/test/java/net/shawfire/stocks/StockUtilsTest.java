@@ -4,7 +4,6 @@ import org.apache.log4j.Level;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.stream.IntStream;
