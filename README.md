@@ -1,4 +1,4 @@
-# Provide a solution to the `stock-challenge`<br/> in Java8 using `TDD` (`T`est `D`riven `D`envelopment)
+# Provide a solution to the `stock-challenge`<br/> in Java8 using `TDD` (`T`est `D`riven `D`evelopment)
 
 `Click` on list items to expand and<br/>
 `Click` on hyperlinks for more information.
