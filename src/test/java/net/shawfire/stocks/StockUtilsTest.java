@@ -4,8 +4,10 @@ import org.apache.log4j.Level;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.stream.IntStream;
 
 public class StockUtilsTest {
 
@@ -75,9 +77,11 @@ public class StockUtilsTest {
     logger4j.setLevel(org.apache.log4j.Level.toLevel("ERROR"));
 
     // Create 0.1M data points
-    int[] stockPrices = new int[100000];
-    for (int i = 0; i < 100000; i++) {
-      stockPrices[i] = (int)(Math.random() * 100);
+    final int dataSetSize = 100_000;
+    final int priceRange = 100;
+    int[] stockPrices = new int[dataSetSize];
+    for (int i = 0; i < dataSetSize; i++) {
+      stockPrices[i] = (int)(Math.random() * priceRange);
     }
 
     // Time the even more optimized function
@@ -90,6 +94,40 @@ public class StockUtilsTest {
     // After second optimization: getMaxProfit time for 0.1M data set: PT0.028S
     // After the first optimization: getMaxProfit time for 0.1M data set: PT0.059S
     // Initial version timing: getMaxProfit time for 0.1M data set: PT4.454S
+
+    // Restore the log level
+    logger4j.setLevel(logLevel);
+  }
+
+  @Test
+  public void batchBenchmark() {
+    org.apache.log4j.Logger logger4j = org.apache.log4j.Logger.getRootLogger();
+    // Save the current log level
+    Level logLevel = logger4j.getLevel();
+    // For benchmarking use the lowest level of logging
+    logger4j.setLevel(org.apache.log4j.Level.toLevel("ERROR"));
+
+    final int numberOfIterations = 1_000;
+    // Market opens at 10am and closes at 4pm, that's  6 hrs * 60 minutes = 360 minutes
+    // with one data point (stock price) every minute, a full day of data would be 360 prices.
+    final int dataSetSize = 360;
+    final int priceRange = 300;
+    long duration = IntStream.range(0, numberOfIterations).mapToLong(x -> {
+      int[] stockPrices = new int[dataSetSize];
+      for (int i = 0; i < stockPrices.length; i++) {
+        stockPrices[i] = (int)(Math.random() * priceRange);
+      }
+      // calculate only the time to run the function
+      final long start = System.nanoTime();
+      StockUtils.getMaxProfit(stockPrices);;
+      final long end = System.nanoTime();
+      return end - start;
+    }).sum(); // sum all the individual execution times
+
+    // to seconds divide by 1_000_000_000
+    double durationInSecounds = duration / 1_000_000_000.0;
+    System.out.println("getMaxProfit time for " + numberOfIterations + " calls of " +
+            dataSetSize + " data set: " + durationInSecounds + " seconds");
 
     // Restore the log level
     logger4j.setLevel(logLevel);
