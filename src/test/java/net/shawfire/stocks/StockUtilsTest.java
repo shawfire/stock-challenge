@@ -89,10 +89,14 @@ public class StockUtilsTest {
     Instant end = Instant.now();
     Duration duration = Duration.between(start, end);
     System.out.println("getMaxProfit time for 0.1M data set: " + duration);
+    // Timing with no logging
     // getMaxProfit time for 0.1M data set: PT0.0025
     // After second optimization: getMaxProfit time for 0.1M data set: PT0.028S
     // After the first optimization: getMaxProfit time for 0.1M data set: PT0.059S
     // Initial version timing: getMaxProfit time for 0.1M data set: PT4.454S
+
+    // Timings with logging set to ERROR
+    // getMaxProfit time for 0.1M data set: PT0.0235
 
     // Restore the log level
     logger4j.setLevel(logLevel);
@@ -115,6 +119,40 @@ public class StockUtilsTest {
       int[] stockPrices = new int[dataSetSize];
       for (int i = 0; i < stockPrices.length; i++) {
         stockPrices[i] = (int)(Math.random() * priceRange);
+      }
+      // calculate only the time to run the function
+      final long start = System.nanoTime();
+      StockUtils.getMaxProfit(stockPrices);;
+      final long end = System.nanoTime();
+      return end - start;
+    }).sum(); // sum all the individual execution times
+
+    // to seconds divide by 1_000_000_000
+    double durationInSecounds = duration / 1_000_000_000.0;
+    System.out.println("getMaxProfit time for " + numberOfIterations + " calls of " +
+            dataSetSize + " data set: " + durationInSecounds + " seconds");
+
+    // Restore the log level
+    logger4j.setLevel(logLevel);
+  }
+
+  @Test
+  public void singleBenchmark() {
+    org.apache.log4j.Logger logger4j = org.apache.log4j.Logger.getRootLogger();
+    // Save the current log level
+    Level logLevel = logger4j.getLevel();
+    // For benchmarking use the lowest level of logging
+    logger4j.setLevel(org.apache.log4j.Level.toLevel("DEBUG"));
+
+    final int numberOfIterations = 1;
+    // Market opens at 10am and closes at 4pm, that's  6 hrs * 60 minutes = 360 minutes
+    // with one data point (stock price) every minute, a full day of data would be 360 prices.
+    final int dataSetSize = 360;
+    final int priceRange = 500;
+    long duration = IntStream.range(0, numberOfIterations).mapToLong(x -> {
+      int[] stockPrices = new int[dataSetSize];
+      for (int i = 0; i < stockPrices.length; i++) {
+        stockPrices[i] = (int)(Math.random() * priceRange) + 1;
       }
       // calculate only the time to run the function
       final long start = System.nanoTime();

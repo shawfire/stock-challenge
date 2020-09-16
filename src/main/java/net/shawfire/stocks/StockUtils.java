@@ -28,7 +28,7 @@ public class StockUtils {
           "There must be at least three elements in the array in order to calculate a profit.");
     }
     int maxProfit = Integer.MIN_VALUE;
-    int profit, prevSellIndex = 0;
+    int profit, prevSellIndex = 0, prevBuyIndex = 0;
     for (int buyIndex = 0; buyIndex < stockPrices.length - 2;) {
 
       //  Efficiency: Only find an new max sell price if
@@ -36,24 +36,26 @@ public class StockUtils {
       if (prevSellIndex > buyIndex + 1) {
         profit = stockPrices[prevSellIndex] - stockPrices[buyIndex];
         maxProfit = Math.max(profit, maxProfit);
-        logger.debug("getMaxProfit buy[{}]: {}, maxSell[{}] : {}, profit: {}", buyIndex,
-                stockPrices[buyIndex], prevSellIndex, stockPrices[prevSellIndex], profit);
+        logger.debug("getMaxProfit buy[{}]: {}, maxSell[{}] : {}, profit: {}, maxProfit: {}", buyIndex,
+                stockPrices[buyIndex], prevSellIndex, stockPrices[prevSellIndex], profit, maxProfit);
+        prevBuyIndex = buyIndex;
       } else {
         // Compare stockPrices[buyIndex] with all other subsequent stockPrices to find
         // the maxProfit
         for (int sellIndex = buyIndex + 2; sellIndex < stockPrices.length;) {
           profit = stockPrices[sellIndex] - stockPrices[buyIndex];
           maxProfit = Math.max(profit, maxProfit);
-          logger.debug("getMaxProfit buy[{}]: {}, sell[{}] : {}, profit: {}", buyIndex,
-                       stockPrices[buyIndex], sellIndex, stockPrices[sellIndex], profit);
+          logger.debug("getMaxProfit buy[{}]: {}, sell[{}] : {}, profit: {}, maxProfit: {}", buyIndex,
+                       stockPrices[buyIndex], sellIndex, stockPrices[sellIndex], profit, maxProfit);
           prevSellIndex = sellIndex;
+          prevBuyIndex = buyIndex;
 
           // Efficiency: find the next sell stockPrice that is greater than the
           // current stockPrices[buyIndex] value
           int prevSell = stockPrices[prevSellIndex];
           do {
             sellIndex += 1;
-          } while (sellIndex < stockPrices.length && prevSell > stockPrices[sellIndex]);
+          } while (sellIndex < stockPrices.length && stockPrices[sellIndex] < prevSell);
         }
       }
 
@@ -64,7 +66,8 @@ public class StockUtils {
         buyIndex += 1;
       } while (buyIndex < stockPrices.length - 2 && prevStart < stockPrices[buyIndex]);
     }
-    logger.info("getMaxProfit maxProfit: {}", maxProfit);
+    logger.info("getMaxProfit buy[{}]: {}, sell[{}] : {}, maxProfit: {}", prevBuyIndex,
+            stockPrices[prevBuyIndex], prevSellIndex, stockPrices[prevSellIndex], maxProfit);
     return maxProfit;
   }
 }
